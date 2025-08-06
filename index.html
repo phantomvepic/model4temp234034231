@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enhanced JEE PDF Chapter Analyzer</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>🎯 Enhanced JEE PDF Chapter Analyzer</h1>
+            <p>Advanced chapter extraction with 50+ keywords and question frameworks per subject</p>
+        </header>
+
+        <main class="main-content">
+            <!-- Upload Section -->
+            <div class="card" id="upload-section">
+                <div class="card__header">
+                    <h2>📄 Upload PDF Chapter</h2>
+                    <p class="upload-subtitle">Enhanced detection algorithms with confidence scoring</p>
+                </div>
+                <div class="card__body">
+                    <div class="upload-area" id="upload-area">
+                        <div class="upload-content">
+                            <div class="upload-icon">📎</div>
+                            <p><strong>Click to upload</strong> or drag and drop your PDF file here</p>
+                            <p class="upload-hint">Supports multi-column layouts, scanned PDFs, and mathematical content</p>
+                        </div>
+                        <input type="file" id="pdf-input" accept=".pdf" class="file-input">
+                    </div>
+                    
+                    <!-- Chapter Name Input Section -->
+                    <div class="chapter-input-section" style="margin-top: 15px;">
+                        <label for="chapter-input" style="display: block; margin-bottom: 8px; font-weight: 500; color: var(--color-text);">
+                            Enter Chapter Name (for question frameworks):
+                        </label>
+                        <input 
+                            type="text" 
+                            id="chapter-input" 
+                            placeholder="e.g., Mechanics, Organic Chemistry, Calculus..." 
+                            style="width: 100%; padding: 10px; border: 1px solid var(--color-border); border-radius: 6px; font-size: 14px; background: var(--color-surface); color: var(--color-text);"
+                        />
+                        <p style="font-size: 12px; color: var(--color-text-secondary); margin-top: 5px; margin-bottom: 0;">
+                            This will be used to generate chapter-specific question frameworks
+                        </p>
+                    </div>
+                    
+                    <div class="file-info" id="file-info" style="display: none;">
+                        <div class="file-details">
+                            <span class="file-name" id="file-name"></span>
+                            <span class="file-size" id="file-size"></span>
+                        </div>
+                        <div class="status" id="upload-status"></div>
+                    </div>
+                    <div class="progress-container" id="progress-container" style="display: none;">
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="progress-fill"></div>
+                        </div>
+                        <div class="progress-text" id="progress-text">Processing...</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Analysis Section -->
+            <div class="card" id="analysis-section" style="display: none;">
+                <div class="card__header">
+                    <h2>🔍 Enhanced Chapter Analysis</h2>
+                    <p class="analysis-subtitle">Multi-method detection with confidence scoring</p>
+                </div>
+                <div class="card__body">
+                    <div class="analysis-grid">
+                        <div class="analysis-item">
+                            <h3>📖 Extracted Chapter Name</h3>
+                            <div class="analysis-result enhanced">
+                                <div class="result-content" id="chapter-name-content">Processing...</div>
+                                <button class="btn btn--sm btn--outline copy-btn" onclick="copyText('chapter-name-content')">Copy</button>
+                            </div>
+                        </div>
+                        <div class="analysis-item">
+                            <h3>🔤 Subject Classification</h3>
+                            <div class="analysis-result">
+                                <div class="result-content">
+                                    <span class="subject-badge" id="subject-content">Analyzing...</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="analysis-item">
+                            <h3>📊 Enhanced Statistics</h3>
+                            <div class="stats-grid">
+                                <div class="stat-item">
+                                    <span class="stat-value" id="pages-count">-</span>
+                                    <span class="stat-label">Pages</span>
+                                </div>
+                                <div class="stat-item">
+                                    <span class="stat-value" id="words-count">-</span>
+                                    <span class="stat-label">Words</span>
+                                </div>
+                                <div class="stat-item">
+                                    <span class="stat-value" id="keywords-count">-</span>
+                                    <span class="stat-label">Keywords</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Results Section -->
+            <div class="card" id="results-section" style="display: none;">
+                <div class="card__header">
+                    <h2>📋 Enhanced Extraction Results</h2>
+                    <p class="results-subtitle">50+ keywords and question frameworks ready for JEE preparation systems</p>
+                </div>
+                <div class="card__body">
+                    <div class="results-grid">
+                        <!-- Enhanced Keywords -->
+                        <div class="result-panel enhanced-panel">
+                            <div class="result-header">
+                                <h3>🔑 Enhanced Keywords Database (50+)</h3>
+                                <p class="result-subtitle">Subject-specific terms with frequency scoring</p>
+                            </div>
+                            <div class="code-result enhanced-code">
+                                <pre><code id="keywords-code">[]</code></pre>
+                                <div class="code-actions">
+                                    <span class="code-info">Python list format</span>
+                                    <button class="btn btn--sm btn--primary copy-btn" onclick="copyText('keywords-code')">Copy</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Enhanced Question Frameworks -->
+                        <div class="result-panel enhanced-panel">
+                            <div class="result-header">
+                                <h3>🎯 Question Frameworks (50+)</h3>
+                                <p class="result-subtitle">Chapter-specific JEE question patterns</p>
+                            </div>
+                            <div class="code-result enhanced-code">
+                                <pre><code id="frameworks-code">[]</code></pre>
+                                <div class="code-actions">
+                                    <span class="code-info">Ready for integration</span>
+                                    <button class="btn btn--sm btn--primary copy-btn" onclick="copyText('frameworks-code')">Copy</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Enhanced Search Results -->
+                        <div class="result-panel full-width">
+                            <div class="result-header">
+                                <h3>🔍 JEE Questions Search Simulation</h3>
+                                <p class="result-subtitle">Comprehensive search queries for JEE preparation platforms</p>
+                            </div>
+                            <div class="search-results enhanced-search">
+                                <div class="search-section">
+                                    <h4>Generated Search Queries</h4>
+                                    <div class="search-queries" id="search-queries"></div>
+                                </div>
+                                <div class="questions-section">
+                                    <h4>Sample Question Patterns</h4>
+                                    <div class="sample-questions" id="sample-questions"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Debug Information -->
+                        <div class="result-panel debug-panel full-width">
+                            <div class="result-header">
+                                <h3>🔧 Debug Information</h3>
+                                <p class="result-subtitle">Chapter detection process details</p>
+                            </div>
+                            <div class="debug-content">
+                                <div class="debug-methods">
+                                    <div class="debug-item">
+                                        <span class="debug-label">Detection Methods:</span>
+                                        <span class="debug-value">Font Analysis, Pattern Matching, Keyword Scoring</span>
+                                    </div>
+                                    <div class="debug-item">
+                                        <span class="debug-label">Processing Status:</span>
+                                        <span class="debug-value">All methods completed successfully</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Enhanced Action Buttons -->
+                    <div class="action-buttons enhanced-actions">
+                        <button class="btn btn--lg btn--primary enhanced-btn" onclick="downloadResults()">
+                            📥 Download Results
+                        </button>
+                        <button class="btn btn--lg btn--outline enhanced-btn" onclick="resetApp()">
+                            🔄 Analyze Another PDF
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Enhanced Processing Modal -->
+    <div class="modal hidden" id="processing-modal">
+        <div class="modal-content enhanced-modal">
+            <div class="modal-header">
+                <h3>🚀 Enhanced PDF Analysis</h3>
+                <p class="processing-subtitle">Advanced multi-method chapter detection in progress</p>
+            </div>
+            <div class="processing-steps enhanced-steps">
+                <div class="step" id="step-1">
+                    <div class="step-icon">📄</div>
+                    <div class="step-content">
+                        <div class="step-text">Enhanced Text Extraction</div>
+                        <div class="step-detail">Advanced PDF parsing with font and positioning analysis</div>
+                    </div>
+                    <div class="step-status"></div>
+                </div>
+                <div class="step" id="step-2">
+                    <div class="step-icon">🔍</div>
+                    <div class="step-content">
+                        <div class="step-text">Multi-Method Chapter Detection</div>
+                        <div class="step-detail">Font analysis, pattern matching, and indicator-based detection</div>
+                    </div>
+                    <div class="step-status"></div>
+                </div>
+                <div class="step" id="step-3">
+                    <div class="step-icon">🔑</div>
+                    <div class="step-content">
+                        <div class="step-text">Enhanced Keyword Extraction</div>
+                        <div class="step-detail">50+ subject-specific keywords with frequency scoring</div>
+                    </div>
+                    <div class="step-status"></div>
+                </div>
+                <div class="step" id="step-4">
+                    <div class="step-icon">🎯</div>
+                    <div class="step-content">
+                        <div class="step-text">Subject Classification</div>
+                        <div class="step-detail">Advanced subject identification using enhanced algorithms</div>
+                    </div>
+                    <div class="step-status"></div>
+                </div>
+                <div class="step" id="step-5">
+                    <div class="step-icon">📝</div>
+                    <div class="step-content">
+                        <div class="step-text">Question Framework Generation</div>
+                        <div class="step-detail">Chapter-specific JEE question patterns (50+ frameworks)</div>
+                    </div>
+                    <div class="step-status"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
